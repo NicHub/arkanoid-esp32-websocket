@@ -22,11 +22,11 @@ The game engine is written in JavaScript with the [threejs](https://threejs.org)
 
 - Create the file `src/WifiSettings.h` manualy and fill it with the code below. Change the default values so that they make sense.
 
-    const char *ssid = "...";
-    const char *password = "...";
-    const char *hostName = "arkanoid";
-    const char *http_username = "admin";
-    const char *http_password = "admin";
+<pre><code>const char *ssid = "...";
+const char *password = "...";
+const char *hostName = "arkanoid";
+const char *http_username = "admin";
+const char *http_password = "admin";</code></pre>
 
 - Change the board type (`env_default` flag) in `platformio.ini`. Currently there are two boards defined, but any ESP32 should work.
 
@@ -40,7 +40,7 @@ If you have a M5STACK, it should be
 
 - The Arkanoid game will be served by the ESP32. So you need to upload the files by running the command below ina terminal so that the ESP32 can serve them to the browser:
 
-    platformio run --target uploadfs
+<pre><code>platformio run --target uploadfs</code></pre>
 
 - If you want to control the game from the ESP, you need to connect three buttons to it. Change `BUTTON_A_PIN`, `BUTTON_B_PIN` and `BUTTON_C_PIN` in `platformio.ini` according to the pins to which you have connected the buttons.
 
@@ -48,10 +48,7 @@ If you have a M5STACK, it should be
 
 Dependencies are defined under `lib_deps` in `platformio.ini` and are therefore automatically downloaded by PlatformIO when you open the project or when you build it.
 
-- ESPAsyncWebServer
-<https://github.com/me-no-dev/ESPAsyncWebServer/blob/master/README.md>
-
-- ESPAsyncWebServer example
+I used the following example to make the [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer/blob/master/README.md) library work:
 <https://gist.github.com/dsteinman/f792f0af25ce6d7d1db4b62d29dd4d9e>
 
 2019, ouilogique.com
