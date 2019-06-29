@@ -7,11 +7,13 @@ The GUI is served to a browser on a desktop computer or a smartphone and you can
 
 It is also possible to play with a mouse or a touch screen, so if you only want to make a quick test, it is possible even without connecting buttons to the ESP.
 
+The idea behind this project was to test the [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer/blob/master/README.md) library, especially the communication through websocket.
+
 This program was tested with an *esp32doit-devkit-v1* and an *ESP32 M5Stack Core*.
 
 It must be compiled with PlatformIO.
 
-The game engine is written in JavaScript with the [threejs](https://threejs.org) library. I reused their example at <https://threejs.org/editor/> (click on `Examples/Arkanoid` in the top left menu).
+The game engine is written in JavaScript with the [threejs](https://threejs.org) library. I reused their example at <https://threejs.org/editor/> (click on `Examples/Arkanoid` in the top left menu and then on `Play`).
 
 <p align="center">
 <img height=400px alt="Arkanoid on ESP32" src="images/arkanoid.jpg" />
