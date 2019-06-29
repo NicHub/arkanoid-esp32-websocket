@@ -18,11 +18,9 @@
  *
  */
 
-#ifndef WEBSERVERAPP_H
-#define WEBSERVERAPP_H
+#pragma once
 
 #include <WifiSettings.h>
-
 #include <Arduino.h>
 #include <WiFi.h>
 #include <ESPmDNS.h>
@@ -31,104 +29,22 @@
 #include <AsyncTCP.h>
 #include <SPIFFS.h>
 #include <ESPAsyncWebServer.h>
-#include <WebServerApp.h>
-#ifdef M5STACK
-#include <M5Stack.h>
-#endif
 
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws"); // access at ws://[esp ip]/ws
 AsyncEventSource events("/events");
 bool ssidFound = false;
 
+void onWsEvent(AsyncWebSocket *server,
+               AsyncWebSocketClient *client,
+               AwsEventType type,
+               void *arg,
+               uint8_t *data,
+               size_t len);
+void setupWebServer();
+void inverseBubbleSortIndexes(int inputArray[], int indexes[], int arraySize);
+void scanNetwork();
 
-/**
- *
- */
-void setupM5STACKStart()
-{
-#ifdef M5STACK
-    M5.begin();
-
-    // Display IP adresses on M5STACK.
-    M5.Lcd.setTextSize(3);
-    M5.Lcd.fillScreen(BLACK);
-
-    M5.Lcd.setTextColor(BLUE, BLACK);
-    M5.Lcd.setCursor(20, 10);
-    M5.Lcd.print("COMPILATION");
-
-    M5.Lcd.setCursor(20, 40);
-    M5.Lcd.print("DATE AND TIME");
-
-    M5.Lcd.setTextColor(WHITE, BLACK);
-    M5.Lcd.setCursor(20, 100);
-    M5.Lcd.print(__DATE__);
-
-    M5.Lcd.setCursor(20, 130);
-    M5.Lcd.print(__TIME__);
-#endif
-}
-
-/**
- *
- */
-void setupM5STACKEnd()
-{
-#ifdef M5STACK
-    M5.Lcd.fillScreen(BLACK);
-
-    M5.Lcd.setTextColor(RED, BLACK);
-    M5.Lcd.setCursor(20, 10);
-    M5.Lcd.print("A R K A N O I D");
-
-    M5.Lcd.setTextColor(WHITE, BLACK);
-    M5.Lcd.setCursor(20, 60);
-    M5.Lcd.print("STATION IP");
-
-    M5.Lcd.setCursor(20, 100);
-    M5.Lcd.print(WiFi.localIP());
-
-    M5.Lcd.setCursor(20, 150);
-    M5.Lcd.print("SOFT-AP IP");
-
-    M5.Lcd.setCursor(20, 190);
-    M5.Lcd.print(WiFi.softAPIP());
-#endif
-}
-
-/**
- * setupSerial
- */
-void setupSerial()
-{
-    Serial.begin(115200);
-    Serial.setDebugOutput(true);
-    delay(10);
-    Serial.printf("START\n");
-}
-
-/**
- * setupButtons
- */
-void setupButtons()
-{
-    pinMode(BUTTON_A_PIN, INPUT_PULLUP);
-    pinMode(BUTTON_B_PIN, INPUT_PULLUP);
-    pinMode(BUTTON_C_PIN, INPUT_PULLUP);
-}
-
-/**
- * printCompilationDateAndTime
- */
-void printCompilationDateAndTime()
-{
-    Serial.print("###\ncompilation date and time:\n");
-    Serial.print(__DATE__);
-    Serial.print("\n");
-    Serial.print(__TIME__);
-    Serial.print("\n###\n\n");
-}
 
 /**
  * onWsEvent
@@ -543,96 +459,6 @@ void setupWebServer()
 }
 
 /**
- * autoPlay
- */
-void autoPlay()
-{
-    if (!ws.enabled())
-        return;
-    const int8_t maxCursorPos = 7;
-    static int8_t cursorPos = 0;
-    const uint8_t wait = 40;
-    static char jsonMsg[100];
-    static bool goLeft = true;
-    if (goLeft)
-    {
-        Serial.print("<");
-        cursorPos--;
-        if (cursorPos < -maxCursorPos)
-            goLeft = false;
-        sprintf(jsonMsg, "{\"cpt\":{\"cpt1\":\"%d\",\"cpt2\":\"%d\"}}", cursorPos, 0);
-        ws.textAll(jsonMsg);
-        delay(wait);
-    }
-    else
-    {
-        Serial.print(">");
-        cursorPos++;
-        if (cursorPos > maxCursorPos)
-            goLeft = true;
-        sprintf(jsonMsg, "{\"cpt\":{\"cpt1\":\"%d\",\"cpt2\":\"%d\"}}", cursorPos, 0);
-        ws.textAll(jsonMsg);
-        delay(wait);
-    }
-}
-
-/**
- * manualPlay
- */
-void manualPlay()
-{
-    if (!ws.enabled())
-        return;
-    const int8_t maxCursorPos = 7;
-    static int8_t cursorPos = 0;
-    const uint8_t wait = 50;
-    static char jsonMsg[100];
-    if (!digitalRead(BUTTON_A_PIN))
-    {
-        Serial.println("Button A");
-        cursorPos--;
-        if (cursorPos < -maxCursorPos)
-            cursorPos = -maxCursorPos;
-        sprintf(jsonMsg, "{\"cpt\":{\"cpt1\":\"%d\",\"cpt2\":\"%d\"}}", cursorPos, 0);
-        ws.textAll(jsonMsg);
-        delay(wait);
-    }
-    if (!digitalRead(BUTTON_C_PIN))
-    {
-        Serial.println("Button C");
-        cursorPos++;
-        if (cursorPos > maxCursorPos)
-            cursorPos = maxCursorPos;
-        sprintf(jsonMsg, "{\"cpt\":{\"cpt1\":\"%d\",\"cpt2\":\"%d\"}}", cursorPos, 0);
-        ws.textAll(jsonMsg);
-        delay(wait);
-    }
-}
-
-/**
- *
- */
-void play()
-{
-    // Change game mode when button B is pressed.
-    static uint8_t gameMode = 0;
-    if (!digitalRead(BUTTON_B_PIN))
-    {
-        gameMode = ++gameMode % 2;
-        Serial.print("game mode = ");
-        Serial.println(gameMode);
-        while (!digitalRead(BUTTON_B_PIN))
-            yield();
-    }
-
-    // Play.
-    if (gameMode == 0)
-        manualPlay();
-    else if (gameMode == 1)
-        autoPlay();
-}
-
-/**
  * inverseBubbleSortIndexes
  */
 void inverseBubbleSortIndexes(int inputArray[], int indexes[], int arraySize)
@@ -704,5 +530,3 @@ void scanNetwork()
     }
     Serial.println("");
 }
-
-#endif //  WEBSERVERAPP_H
