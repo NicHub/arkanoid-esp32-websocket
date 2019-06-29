@@ -3,11 +3,11 @@
 
 Play Arkanoid on a web page served by an ESP32.
 
-The GUI is served to a browser on a desktop computer or a smartphone and you can move the cursor with two physical buttons attached to the ESP. A third button enters automatic mode, i.e. the cursor move automaticaly all the time.
+The GUI is served to a browser on a desktop computer or a smartphone and you can move the cursor with two physical buttons attached to the ESP. A third button enters automatic mode, i.e. the cursor moves automatically all the time.
 
 It is also possible to play with a mouse or a touch screen, so if you only want to make a quick test, it is possible even without connecting buttons to the ESP.
 
-The idea behind this project was to test the [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer/blob/master/README.md) library, especially the communication through websocket.
+The idea behind this project was to test the [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer/blob/master/README.md) library, especially the communication through WebSocket.
 
 This program was tested with an *esp32doit-devkit-v1* and an *ESP32 M5Stack Core*.
 
@@ -22,7 +22,7 @@ The game engine is written in JavaScript with the [threejs](https://threejs.org)
 
 ## Prerequisites
 
-- Create the file `src/WifiSettings.h` manualy and fill it with the code below. Change the default values so that they make sense.
+- Create the file `src/WifiSettings.h` manually and fill it with the code below. Change the default values so that they make sense.
 
 <pre><code>const char *ssid = "...";
 const char *password = "...";
