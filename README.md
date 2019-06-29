@@ -40,7 +40,7 @@ If you have a M5STACK, it should be
 
     env_default = m5stack-core-esp32
 
-- The Arkanoid game will be served by the ESP32. So you need to upload the files by running the command below ina terminal so that the ESP32 can serve them to the browser:
+- The Arkanoid game will be served by the ESP32. So you need to upload the files by running the command below in a terminal so that the ESP32 can serve them to the browser:
 
 <pre><code>platformio run --target uploadfs</code></pre>
 
