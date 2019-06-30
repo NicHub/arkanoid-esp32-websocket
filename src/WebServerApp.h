@@ -197,11 +197,17 @@ void onWsEvent(AsyncWebSocket *server,
  */
 void setupWebServer()
 {
+    char apssid[33];
+    strcpy(apssid, ap_ssid);
+    strcat(apssid, WiFi.macAddress().c_str());
+    Serial.print("## apssid = ");
+    Serial.println(apssid);
+
     if (ssidFound)
     {
         Serial.print("WiFi MODE = STATION + SOFT-AP\n");
         WiFi.mode(WIFI_AP_STA);
-        WiFi.softAP(hostName);
+        WiFi.softAP(apssid);
         WiFi.begin(ssid, password);
         if (WiFi.waitForConnectResult() != WL_CONNECTED)
         {
@@ -215,18 +221,15 @@ void setupWebServer()
     {
         Serial.print("WiFi MODE = SOFT-AP\n");
         WiFi.mode(WIFI_AP);
-        char apssid[20];
-        strcpy(apssid, hostName);
-        strcat(apssid, "-net");
-        Serial.print("## apssid = ");
-        Serial.println(apssid);
-        if (true)
+        Serial.print("ap_password = ");
+        Serial.println(ap_password);
+        if (strlen(ap_password) == 0)
             WiFi.softAP(apssid);
         else
-            WiFi.softAP(apssid, password);
+            WiFi.softAP(apssid, ap_password);
     }
 
-    WiFi.setHostname(hostName);
+    WiFi.setHostname(ap_ssid);
 
     Serial.print("####\nws.client.enabled: ");
     Serial.print(ws.enabled());
@@ -279,7 +282,7 @@ void setupWebServer()
     /**
      *
      */
-    ArduinoOTA.setHostname(hostName);
+    ArduinoOTA.setHostname(ap_ssid);
 
     /**
      *
