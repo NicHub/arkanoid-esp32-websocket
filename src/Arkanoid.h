@@ -22,18 +22,17 @@
 
 #include <WebServerApp.h>
 
-#ifdef M5STACK
+#ifdef M5STACKPLATFORM
 #include <M5Stack.h>
 #endif
-
 
 /**
  *
  */
 void setupM5STACKStart()
 {
-#ifdef M5STACK
-    M5.begin();
+#ifdef M5STACKPLATFORM
+    M5.begin(true, false, false, false);
 
     // Display IP adresses on M5STACK.
     M5.Lcd.setTextSize(3);
@@ -60,7 +59,7 @@ void setupM5STACKStart()
  */
 void setupM5STACKEnd()
 {
-#ifdef M5STACK
+#ifdef M5STACKPLATFORM
     M5.Lcd.fillScreen(BLACK);
 
     M5.Lcd.setTextColor(RED, BLACK);
@@ -115,6 +114,15 @@ void printCompilationDateAndTime()
     Serial.print("\n###\n\n");
 }
 
+/**
+ * sendJSON
+ */
+void sendJSONcursorPos(int8_t cursorPos)
+{
+    static char jsonMsg[100];
+    sprintf(jsonMsg, "{\"cpt\":{\"cpt1\":\"%d\",\"cpt2\":\"%d\"}}", cursorPos, 0);
+    ws.textAll(jsonMsg);
+}
 
 /**
  * autoPlay
@@ -123,19 +131,19 @@ void autoPlay()
 {
     if (!ws.enabled())
         return;
+
     const int8_t maxCursorPos = 7;
     static int8_t cursorPos = 0;
-    const uint8_t wait = 40;
-    static char jsonMsg[100];
+    const uint8_t wait = 30;
     static bool goLeft = true;
+
     if (goLeft)
     {
         Serial.print("<");
         cursorPos--;
         if (cursorPos < -maxCursorPos)
             goLeft = false;
-        sprintf(jsonMsg, "{\"cpt\":{\"cpt1\":\"%d\",\"cpt2\":\"%d\"}}", cursorPos, 0);
-        ws.textAll(jsonMsg);
+        sendJSONcursorPos(cursorPos);
         delay(wait);
     }
     else
@@ -144,8 +152,7 @@ void autoPlay()
         cursorPos++;
         if (cursorPos > maxCursorPos)
             goLeft = true;
-        sprintf(jsonMsg, "{\"cpt\":{\"cpt1\":\"%d\",\"cpt2\":\"%d\"}}", cursorPos, 0);
-        ws.textAll(jsonMsg);
+        sendJSONcursorPos(cursorPos);
         delay(wait);
     }
 }
@@ -157,28 +164,28 @@ void manualPlay()
 {
     if (!ws.enabled())
         return;
+
     const int8_t maxCursorPos = 7;
     static int8_t cursorPos = 0;
-    const uint8_t wait = 50;
-    static char jsonMsg[100];
+    const uint8_t wait = 60;
+
     if (!digitalRead(BUTTON_A_PIN))
     {
         Serial.println("Button A");
         cursorPos--;
         if (cursorPos < -maxCursorPos)
             cursorPos = -maxCursorPos;
-        sprintf(jsonMsg, "{\"cpt\":{\"cpt1\":\"%d\",\"cpt2\":\"%d\"}}", cursorPos, 0);
-        ws.textAll(jsonMsg);
+        sendJSONcursorPos(cursorPos);
         delay(wait);
     }
+
     if (!digitalRead(BUTTON_C_PIN))
     {
         Serial.println("Button C");
         cursorPos++;
         if (cursorPos > maxCursorPos)
             cursorPos = maxCursorPos;
-        sprintf(jsonMsg, "{\"cpt\":{\"cpt1\":\"%d\",\"cpt2\":\"%d\"}}", cursorPos, 0);
-        ws.textAll(jsonMsg);
+        sendJSONcursorPos(cursorPos);
         delay(wait);
     }
 }
@@ -188,11 +195,16 @@ void manualPlay()
  */
 void play()
 {
-    // Change game mode when button B is pressed.
+    if (!ws.enabled())
+        return;
+
     static uint8_t gameMode = 0;
+
+    // Change game mode when button B is pressed.
     if (!digitalRead(BUTTON_B_PIN))
     {
-        gameMode = ++gameMode % 2;
+        if (++gameMode > 1)
+            gameMode = 0;
         Serial.print("game mode = ");
         Serial.println(gameMode);
         while (!digitalRead(BUTTON_B_PIN))

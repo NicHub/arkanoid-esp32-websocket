@@ -67,7 +67,7 @@ void onWsEvent(AsyncWebSocket *server,
     }
     else if (type == WS_EVT_DISCONNECT)
     {
-        Serial.printf("ws[%s][%u] disconnect: %u\n",
+        Serial.printf("ws[%s][%u] disconnect\n",
                       server->url(),
                       client->id());
     }
