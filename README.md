@@ -26,10 +26,14 @@ The game engine is written in JavaScript with the [threejs](https://threejs.org)
 
 Create the file `src/WifiSettings.h` manually and fill it in with the code below. Change the default values to make them meaningful. The mac address of the ESP32 will be automatically added to `ap_ssid` so that you can flash multiple ESPs with the same code, making sure their SSIDs are different.
 
-    const char *ssid = "...";          // ssid of your WiFi network
-    const char *password = "...";      // password of your WiFi network
-    const char *ap_ssid = "ARKANOID-"; // ssid of the ESP32 WiFi network (15 char max)
-    const char *ap_password = "";      // must be 8 char min or empty for no password
+```cpp
+#pragma once
+const char *ssid = "...";          // SSID of your WiFi router.
+const char *password = "...";      // Password of your WiFi router.
+const char *ap_ssid = "ARKANOID-"; // SSID of the ESP32 WiFi network in soft-AP mode (15 char max).
+const char *ap_password = "";      // Password of the ESP32 WiFi network in soft-AP mode.
+                                   // Must be 8 char min or empty for no password.
+```
 
 ---
 
@@ -47,7 +51,9 @@ But if you have a M5STACK, it should be
 
 The Arkanoid game will be served by the ESP32. So you need to upload the files by running the command below in a terminal  so that the ESP32 can serve them to the browser:
 
-    platformio run --target uploadfs
+```bash
+platformio run --target uploadfs
+```
 
 > You can open the terminal directly in platformio with the rightmost button in the status bar in the bottom left of the vscode window.
 
