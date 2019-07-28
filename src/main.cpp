@@ -18,21 +18,33 @@
  *
  */
 
+#include <Arduino.h>
 #include <WebServerApp.h>
 #include <Arkanoid.h>
+#ifdef BOARD_M5STACK_CORE_ESP32
+#include <M5Stack.h>
+#endif
+
+AsyncWebSocket ws("/ws");
+AsyncWebServer server(80);
+AsyncEventSource events("/events");
 
 /**
  *
  */
 void setup()
 {
+#ifdef BOARD_M5STACK_CORE_ESP32
     setupM5STACKStart();
+#endif
     setupSerial();
     setupButtons();
     scanNetwork();
     setupWebServer();
     printCompilationDateAndTime();
+#ifdef BOARD_M5STACK_CORE_ESP32
     setupM5STACKEnd();
+#endif
 }
 
 /**

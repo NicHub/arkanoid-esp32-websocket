@@ -22,7 +22,7 @@
 
 #include <WebServerApp.h>
 
-#ifdef M5STACKPLATFORM
+#ifdef BOARD_M5STACK_CORE_ESP32
 #include <M5Stack.h>
 #endif
 
@@ -31,7 +31,7 @@
  */
 void setupM5STACKStart()
 {
-#ifdef M5STACKPLATFORM
+#ifdef BOARD_M5STACK_CORE_ESP32
     M5.begin(true, false, false, false);
 
     // Display IP adresses on M5STACK.
@@ -59,7 +59,7 @@ void setupM5STACKStart()
  */
 void setupM5STACKEnd()
 {
-#ifdef M5STACKPLATFORM
+#ifdef BOARD_M5STACK_CORE_ESP32
     M5.Lcd.fillScreen(BLACK);
 
     M5.Lcd.setTextColor(RED, BLACK);
@@ -82,7 +82,7 @@ void setupM5STACKEnd()
 }
 
 /**
- * setupSerial
+ *
  */
 void setupSerial()
 {
@@ -93,7 +93,7 @@ void setupSerial()
 }
 
 /**
- * setupButtons
+ *
  */
 void setupButtons()
 {
@@ -103,7 +103,7 @@ void setupButtons()
 }
 
 /**
- * printCompilationDateAndTime
+ *
  */
 void printCompilationDateAndTime()
 {
@@ -115,7 +115,7 @@ void printCompilationDateAndTime()
 }
 
 /**
- * sendJSON
+ *
  */
 void sendJSONcursorPos(int8_t cursorPos)
 {
@@ -125,7 +125,7 @@ void sendJSONcursorPos(int8_t cursorPos)
 }
 
 /**
- * autoPlay
+ *
  */
 void autoPlay()
 {
@@ -158,7 +158,7 @@ void autoPlay()
 }
 
 /**
- * manualPlay
+ *
  */
 void manualPlay()
 {
