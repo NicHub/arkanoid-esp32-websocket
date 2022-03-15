@@ -17,8 +17,12 @@ The game engine is written in JavaScript with the [threejs](https://threejs.org)
 
 **The implementation of the game is very basic and is not complete (and probably never will be).**
 
-<p align="center">
+<p style="text-align:center; margin-top:30px">
 <img height=400px alt="Arkanoid on ESP32" src="images/arkanoid.jpg" />
+</p>
+
+<p style="text-align:center; margin-top:30px">
+<img height=200px alt="Arkanoid on ESP32" src="images/arkanoid-on-esp32doit-devkit-v1.jpg" />
 </p>
 
 
@@ -49,7 +53,8 @@ But if you have a M5STACK, it should be
 
 ---
 
-The Arkanoid game will be served by the ESP32. So you need to upload the files by running the command below in a terminal  so that the ESP32 can serve them to the browser:
+The Arkanoid game will be served by the ESP32. So you need to upload the files by running the command below in a terminal so that the ESP32 can serve them to the browser.
+Alternatively, you can also use the "Upload Filesystem Image" function in the PlatformIO functions sidebar.
 
 ```bash
 platformio run --target uploadfs
