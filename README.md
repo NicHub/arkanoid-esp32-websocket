@@ -22,7 +22,7 @@ The game engine is written in JavaScript with the [threejs](https://threejs.org)
 </p>
 
 <p align="center" style="margin-top:30px">
-<img height=200px alt="Arkanoid on ESP32" src="images/arkanoid-on-esp32doit-devkit-v1.jpg" />
+<img height=200px alt="Arkanoid on ESP32" src="images/arkanoid-on-esp32doit-devkit-v1-lowres.jpg" />
 </p>
 
 
