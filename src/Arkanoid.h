@@ -22,74 +22,12 @@
 
 #include <WebServerApp.h>
 
-#ifdef BOARD_M5STACK_CORE_ESP32
-#include <M5Stack.h>
-#endif
-
-/**
- *
- */
-void setupM5STACKStart()
-{
-#ifdef BOARD_M5STACK_CORE_ESP32
-    M5.begin(true, false, false, false);
-
-    // Display IP adresses on M5STACK.
-    M5.Lcd.setTextSize(3);
-    M5.Lcd.fillScreen(BLACK);
-
-    M5.Lcd.setTextColor(BLUE, BLACK);
-    M5.Lcd.setCursor(20, 10);
-    M5.Lcd.print("COMPILATION");
-
-    M5.Lcd.setCursor(20, 40);
-    M5.Lcd.print("DATE AND TIME");
-
-    M5.Lcd.setTextColor(WHITE, BLACK);
-    M5.Lcd.setCursor(20, 100);
-    M5.Lcd.print(__DATE__);
-
-    M5.Lcd.setCursor(20, 130);
-    M5.Lcd.print(__TIME__);
-#endif
-}
-
-/**
- *
- */
-void setupM5STACKEnd()
-{
-#ifdef BOARD_M5STACK_CORE_ESP32
-    M5.Lcd.fillScreen(BLACK);
-
-    M5.Lcd.setTextColor(RED, BLACK);
-    M5.Lcd.setCursor(20, 10);
-    M5.Lcd.print("A R K A N O I D");
-
-    M5.Lcd.setTextColor(WHITE, BLACK);
-    M5.Lcd.setCursor(20, 60);
-    M5.Lcd.print("STATION IP");
-
-    M5.Lcd.setCursor(20, 100);
-    M5.Lcd.print(WiFi.localIP());
-
-    M5.Lcd.setCursor(20, 150);
-    M5.Lcd.print("SOFT-AP IP");
-
-    M5.Lcd.setCursor(20, 190);
-    M5.Lcd.print(WiFi.softAPIP());
-#endif
-}
-
 /**
  *
  */
 void setupSerial()
 {
-    Serial.begin(115200);
-    Serial.setDebugOutput(true);
-    delay(10);
-    Serial.printf("START\n");
+    Serial.begin(BAUD_RATE);
 }
 
 /**
@@ -107,11 +45,20 @@ void setupButtons()
  */
 void printCompilationDateAndTime()
 {
-    Serial.print("###\ncompilation date and time:\n");
-    Serial.print(__DATE__);
-    Serial.print("\n");
-    Serial.print(__TIME__);
-    Serial.print("\n###\n\n");
+    Serial.println(F("\n\n\n# ARKANOID\n"));
+    Serial.print(F("FILE NAME:        "));
+    Serial.println(__FILE__);
+    Serial.print(F("PIO PROJECT PATH: "));
+    Serial.println(PIO_PROJECT_PATH);
+    Serial.print(F("COMPILATION DATE: "));
+    Serial.println(COMPILATION_DATE);
+    Serial.print(F("COMPILATION TIME: "));
+    Serial.println(COMPILATION_TIME);
+    Serial.print(F("PYTHON VERSION:   "));
+    Serial.println(PYTHON_VERSION);
+    Serial.print(F("PYTHON PATH:      "));
+    Serial.println(PYTHON_PATH);
+    Serial.println("");
 }
 
 /**
