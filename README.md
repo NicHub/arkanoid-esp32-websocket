@@ -1,7 +1,6 @@
+# ARKANOID ON ESP32
 
-# A R K A N O I D    O N    E S P 3 2
-
-*Play Arkanoid on a web page served by an ESP32.*
+_Play Arkanoid on a web page served by an ESP32._
 
 The Arkanoid game is served by an ESP32 to a web browser on a desktop computer or a smartphone and you can move the cursor with two physical buttons attached to the ESP. A third button enters automatic mode, i.e. the cursor moves automatically all the time.
 
@@ -9,7 +8,7 @@ It is also possible to play with a mouse or a touch screen, so if you only want 
 
 The idea behind this project was to test the [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer/blob/master/README.md) library, especially the communication through WebSocket.
 
-This program was tested with an *esp32doit-devkit-v1* and an *ESP32 M5Stack Core*.
+This program was tested with an _esp32doit-devkit-v1_ and an _ESP32 M5Stack Core_.
 
 It must be compiled with PlatformIO.
 
@@ -24,7 +23,6 @@ The game engine is written in JavaScript with the [threejs](https://threejs.org)
 <p align="center" style="margin-top:30px">
 <img height=200px alt="Arkanoid on ESP32" src="images/arkanoid-on-esp32doit-devkit-v1-lowres.jpg" />
 </p>
-
 
 ## Prerequisites
 
@@ -41,7 +39,7 @@ const char *ap_password = "";      // Password of the ESP32 WiFi network in soft
 
 ---
 
-Change the board type (`env_default` flag) in `platformio.ini`. Currently there are two boards defined, but any ESP32 should work.
+Change the board type (`env_default` flag) in `platformio.ini`. Any ESP32 should work.
 
 So if you have a regular ESP32 the `env_default` flag should be:
 
@@ -81,11 +79,9 @@ If the `STATION IP address` is `http://0.0.0.0/` that means your ESP is not conn
 
 > If you have a M5STACK, you don’t need to open the serial monitor, the information will be displayed on the M5STACK screen.
 
-
 ## Play
 
-Open your browser and go to `STATION IP address` or `SOFT-AP IP address` depending on your configuration. You should see a welcome page. Click on *Arkanoid* and play with your mouse or with the buttons attached to the ESP.
-
+Open your browser and go to `STATION IP address` or `SOFT-AP IP address` depending on your configuration. You should see a welcome page. Click on _Arkanoid_ and play with your mouse or with the buttons attached to the ESP.
 
 ## Dependencies
 
